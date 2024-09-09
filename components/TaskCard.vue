@@ -1,5 +1,12 @@
 <template>
-  <div class="relative group bg-white rounded-md p-4 shadow hover:bg-gray-300">
+  <div
+    ref="cardRef"
+    class="relative group bg-white rounded-md p-4 shadow hover:bg-gray-300 transition-opacity duration-300"
+    :class="{ 'opacity-0': isDragging }"
+    draggable="true"
+    @dragstart="onDragStart"
+    @dragend="onDragEnd"
+  >
     <NuxtLink :to="`/task/${task.id}`">
       <div :key="task.id">
         <h3 class="text-lg font-semibold mb-2">
@@ -29,7 +36,6 @@
     </button>
   </div>
 </template>
-
 <script setup lang="ts">
 import type { Task } from "~/types/Task";
 import { useTaskStore } from "~/stores/tasks";
@@ -39,16 +45,56 @@ const props = defineProps<{
 }>();
 
 const taskStore = useTaskStore();
+const cardRef = ref<HTMLElement | null>(null);
+const isDragging = ref(false);
 
-const taskDescription = computed(
-  () =>
-    props.task.description.slice(0, 38) +
-    (props.task.description.length > 38 ? "..." : "")
+const taskDescription = computed(() =>
+  props.task.description
+    ? props.task.description.slice(0, 38) +
+      (props.task.description.length > 38 ? "..." : "")
+    : null
 );
 
 const deleteTask = (id: string) => {
   taskStore.deleteTask(id);
 };
-</script>
 
+const emit = defineEmits(["dragstart", "dragend"]);
+
+const onDragStart = (event: DragEvent) => {
+  if (event.dataTransfer && cardRef.value) {
+    event.dataTransfer.setData("text/plain", props.task.id);
+    event.dataTransfer.effectAllowed = "move";
+
+    // Set opacity to 0 after a short delay to for the transition to take effect
+    setTimeout(() => {
+      isDragging.value = true;
+    }, 0);
+
+    // Create a clone of the card for the drag image
+    const dragImage = cardRef.value.cloneNode(true) as HTMLElement;
+    dragImage.style.width = `${cardRef.value.offsetWidth}px`;
+    dragImage.style.height = `${cardRef.value.offsetHeight}px`;
+    dragImage.style.position = "fixed";
+    dragImage.style.top = "-1000px";
+    dragImage.style.left = "-1000px";
+
+    // Append the clone to the body
+    document.body.appendChild(dragImage);
+
+    event.dataTransfer.setDragImage(dragImage, 0, 0);
+
+    setTimeout(() => {
+      document.body.removeChild(dragImage);
+    }, 0);
+  }
+
+  emit("dragstart", props.task);
+};
+
+const onDragEnd = () => {
+  isDragging.value = false;
+  emit("dragend");
+};
+</script>
 <style scoped></style>

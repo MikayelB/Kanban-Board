@@ -6,7 +6,10 @@
     @keydown.esc="closeModal"
     tabindex="0"
   >
-    <div class="bg-white p-6 rounded-lg shadow-xl w-96" @click.stop>
+    <div
+      class="bg-white p-6 rounded-lg shadow-xl w-96 border-2 border-yellow-600"
+      @click.stop
+    >
       <h2 class="text-2xl font-bold mb-4">Create New Task</h2>
       <p class="text-red-500 font-bold" v-if="!isTitleProvided">
         No Title provided
@@ -15,10 +18,8 @@
         v-model="title"
         placeholder="Task Title"
         class="w-full p-2 mb-4 border rounded"
+        autocomplete="off"
       />
-      <p class="text-red-500 font-bold" v-if="!isDescriptionProvided">
-        No Title provided
-      </p>
       <textarea
         v-model="description"
         placeholder="Task Description"
@@ -48,7 +49,6 @@ const taskStore = useTaskStore();
 
 const isOpen = ref(false);
 const isTitleProvided = ref(true);
-const isDescriptionProvided = ref(true);
 const title = ref("");
 const description = ref("");
 
@@ -61,38 +61,23 @@ const closeModal = () => {
   title.value = "";
   description.value = "";
   isTitleProvided.value = true;
-  isDescriptionProvided.value = true;
 };
 
 const handleSaveTask = () => {
-  if (!title.value && !description.value) {
-    isTitleProvided.value = false;
-    isDescriptionProvided.value = false;
-    return;
-  }
-
   if (!title.value) {
     isTitleProvided.value = false;
     return;
   }
   isTitleProvided.value = true;
 
-  if (!description.value) {
-    isDescriptionProvided.value = false;
-    return;
-  }
-  isDescriptionProvided.value = true;
-
   const newTask = {
     id: undefined,
     title: title.value,
     description: description.value,
-    status: "todo",
+    status: "toDo",
   };
 
-  console.log("newTask", newTask);
   taskStore.addTask(newTask);
-  console.log("Task added, updated store:", taskStore.tasks);
   closeModal();
 };
 

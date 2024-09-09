@@ -1,6 +1,8 @@
 <template>
   <div class="min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-8 m-4">
+    <div
+      class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-8 m-4 border-2 border-yellow-600"
+    >
       <div class="flex justify-center items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">
           Error {{ error.statusCode }}

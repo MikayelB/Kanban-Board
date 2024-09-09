@@ -1,6 +1,8 @@
 <template>
   <div class="min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-8 m-4">
+    <div
+      class="bg-white rounded-lg shadow-lg w-full max-w-4xl p-8 m-4 border-2 border-yellow-600"
+    >
       <div class="flex justify-between items-start mb-6">
         <h1 class="text-3xl font-bold text-gray-800">{{ taskInfo.title }}</h1>
         <button
@@ -25,6 +27,14 @@
       <div class="bg-gray-100 rounded-lg p-6">
         <p class="text-xl text-gray-700">{{ taskInfo.description }}</p>
       </div>
+      <div class="mt-6 flex justify-end">
+        <button
+          @click="handleGoBackHome"
+          class="bg-slate-950 hover:bg-slate-950/75 text-white font-bold py-2 px-4 rounded"
+        >
+          Go Back Home
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +56,10 @@ watchEffect(async () => {
 
 const deleteTask = () => {
   taskStore.deleteTask(id);
+  router.push("/");
+};
+
+const handleGoBackHome = () => {
   router.push("/");
 };
 </script>

@@ -15,6 +15,11 @@ export const useTaskStore = defineStore("tasks", {
       this.loading = false;
     },
     async addTask(task: Task) {
+      if (!task.title) {
+        console.log("No title");
+        return;
+      }
+
       const newTask = { ...task, id: crypto.randomUUID() };
       this.tasks.push(newTask);
 
@@ -73,9 +78,6 @@ export const useTaskStore = defineStore("tasks", {
           fatal: true,
         });
       }
-    },
-    getAllTasks(): Task[] {
-      return this.tasks;
     },
   },
 });
