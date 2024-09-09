@@ -16,6 +16,7 @@
       </p>
       <input
         v-model="title"
+        type="text"
         placeholder="Task Title"
         class="w-full p-2 mb-4 border rounded"
         autocomplete="off"
