@@ -1,75 +1,16 @@
-# Nuxt 3 Minimal Starter
+# To Start The Application
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+In the terminal go to the root of the application
 
-## Setup
+Install dependencies by running:
 
-Make sure to install the dependencies:
+`npm install`
 
-```bash
-# npm
-npm install
+Run JSON Server (this keeps the task information locally instead of an actual DB):
 
-# pnpm
-pnpm install
+`json-server -w ./server/data.json` if for some reason this doesn't work run the following command `npm install -g json-server` and retry
 
-# yarn
-yarn install
+Start the application by running:
 
-# bun
-bun install
-```
+`npm run dev`
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
