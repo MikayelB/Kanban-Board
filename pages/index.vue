@@ -29,7 +29,6 @@
 import { ref, computed } from "vue";
 import { useTaskStore } from "~/stores/tasks";
 import CreateTaskModal from "~/components/CreateTaskModal.vue";
-import { onMounted } from "vue";
 
 const createTaskModal = ref(null);
 const taskStore = useTaskStore();

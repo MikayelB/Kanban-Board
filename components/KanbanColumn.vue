@@ -6,18 +6,13 @@
   >
     <h2 class="text-xl font-bold mb-4 text-center">{{ title }}</h2>
     <div class="space-y-4 overflow-y-auto flex-grow">
-      <TaskCard
-        v-for="task in tasks"
-        :key="task.id"
-        :task="task"
-        @dragstart="onDragStart"
-      />
+      <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
+import { defineProps } from "vue";
 import TaskCard from "./TaskCard.vue";
 import type { Task } from "~/types/Task";
 
@@ -27,10 +22,6 @@ const props = defineProps<{
   tasks: Task[];
 }>();
 const emit = defineEmits(["drop"]);
-
-const onDragStart = (task: Task) => {
-  // You can add any additional logic here if needed
-};
 
 const onDrop = (event: DragEvent) => {
   const taskId = event.dataTransfer?.getData("text/plain");
