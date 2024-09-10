@@ -9,6 +9,7 @@ Install dependencies by running:
 Install and run JSON Server (this keeps the task information locally instead of an actual DB):
 
 `npm install -g json-server`
+
 `json-server -w ./server/data.json`
 
 Start the application by running:
